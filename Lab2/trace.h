@@ -2,6 +2,7 @@
 
 #include <list>
 #include "point.h"
+#include <GL\glut.h>
 
 class Trace
 {
@@ -22,5 +23,25 @@ public:
 	}
 	float getSpeed();
 	std::list<Point>& getTrace();
+	void draw();
+	Point goUp()
+	{
+		return trace_.front().goUp(speed_);
+	}
+
+	Point goDown()
+	{
+		return trace_.front().goDown(speed_);
+	}
+
+	Point goLeft()
+	{
+		return trace_.front().goLeft(speed_);
+	}
+
+	Point goRight()
+	{
+		return trace_.front().goRight(speed_);
+	}
 };
 

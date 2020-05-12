@@ -19,6 +19,7 @@ public:
 		y_ = y;
 		r_ = r;
 	}
+
 	Point operator+(Point& right)
 	{
 		Point tmp;
@@ -27,6 +28,7 @@ public:
 		tmp.r_ = this->r_ + right.r_;
 		return tmp;
 	}
+
 	Point operator-(Point& right)
 	{
 		Point tmp;
@@ -35,31 +37,7 @@ public:
 		tmp.r_ = this->r_ - right.r_;
 		return tmp;
 	}
-	Point operator-()
-	{
-		Point tmp;
-		tmp.x_ = -this->x_;
-		tmp.y_ = -this->y_;
-		tmp.r_ = this->r_;
-		return tmp;
-	}
-	Point operator+=(Point& right)
-	{
-		x_ += right.x_;
-		y_ += right.y_;
-		r_ += right.r_;
-		return *this;
-	}
-	Point operator-=(Point& right)
-	{
-		x_ -= right.x_;
-		y_ -= right.y_;
-		r_ -= right.r_;
-		return *this;
-	}
-	double getX();
-	double getY();
-	double getR();
+
 	Point goDown(float step);
 	Point goUp(float step);
 	Point goLeft(float step);

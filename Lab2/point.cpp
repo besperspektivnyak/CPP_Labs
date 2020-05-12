@@ -1,44 +1,36 @@
 #include "point.h"
 #include <GL\glut.h>
 
-
-double Point::getX()
-{
-	return x_;
-}
-
-double Point::getY()
-{
-	return y_;
-}
-
-double Point::getR()
-{
-	return r_;
-}
-
 Point Point::goDown(float step)
 {
+  Point tmp;
 	this->y_ -= step;
-	return *this;
+	tmp = (*this);
+	return tmp;
 }
 
 Point Point::goUp(float step)
 {
+	Point tmp;
 	this->y_ += step;
-	return *this;
+	tmp = (*this);
+	return tmp;
 }
 
 Point Point::goLeft(float step)
 {
+	Point tmp;
 	this->x_ -= step;
-	return *this;
+	tmp = (*this);
+	return tmp;
 }
 
 Point Point::goRight(float step)
 {
+	Point tmp;
 	this->x_ += step;
-	return *this;
+	tmp = (*this);
+	return tmp;
 }
 
 void Point::draw(int size)
