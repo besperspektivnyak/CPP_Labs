@@ -22,12 +22,7 @@ void changeSize(int w, int h)
 void renderScene(void)
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  if (trace.getTrace().size() > 12)
-  {
-    trace.getTrace().pop_back();
-  }
-  trace.draw();
+  trace.update();
   glutSwapBuffers();
 }
 
@@ -42,25 +37,24 @@ void processSpecialKeys(int key, int x, int y)
   switch (key) 
   {
   case GLUT_KEY_UP:
-    tmp = trace.goUp();
+    trace.goUp(&tmp);
     break;
   case GLUT_KEY_DOWN:
-    tmp = trace.goDown();
+    trace.goDown(&tmp);
     break;
   case GLUT_KEY_LEFT:
-    tmp = trace.goLeft();
+    trace.goLeft(&tmp);
     break;
   case GLUT_KEY_RIGHT:
-    tmp = trace.goRight();
+    trace.goRight(&tmp);
     break;
   }
 }
 
 void Timer(int)
 {
-  int i = 0;
   renderScene();
-  trace.getTrace().push_front(tmp);
+  trace.add(tmp);
   glutTimerFunc(40, Timer, 0);
 }
 

@@ -32,3 +32,16 @@ void Trace::draw()
   }
 }
 
+void Trace::update()
+{
+  if (trace_.size() > 12)
+  {
+    trace_.pop_back();
+  }
+  draw();
+}
+
+void Trace::add(Point p)
+{
+  trace_.push_front(p);
+}

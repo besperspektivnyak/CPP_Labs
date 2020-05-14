@@ -38,9 +38,9 @@ public:
 		return tmp;
 	}
 
-	Point goDown(float step);
-	Point goUp(float step);
-	Point goLeft(float step);
-	Point goRight(float step);
+	void goDown(float step, Point *p);
+	void goUp(float step, Point *p);
+	void goLeft(float step, Point *p);
+	void goRight(float step, Point *p);
 	void draw(int size);
 };

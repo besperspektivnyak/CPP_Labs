@@ -4,6 +4,8 @@
 #include "point.h"
 #include <GL\glut.h>
 
+extern Point tmp;
+
 class Trace
 {
 private:
@@ -24,24 +26,26 @@ public:
 	float getSpeed();
 	std::list<Point>& getTrace();
 	void draw();
-	Point goUp()
+	void update();
+	void add(Point p);
+	void goUp(Point *p)
 	{
-		return trace_.front().goUp(speed_);
+		 trace_.front().goUp(speed_, p);
 	}
 
-	Point goDown()
+	void goDown(Point *p)
 	{
-		return trace_.front().goDown(speed_);
+		 trace_.front().goDown(speed_, p);
 	}
 
-	Point goLeft()
+	void goLeft(Point *p)
 	{
-		return trace_.front().goLeft(speed_);
+		 trace_.front().goLeft(speed_, p);
 	}
 
-	Point goRight()
+	void goRight(Point *p)
 	{
-		return trace_.front().goRight(speed_);
+	   trace_.front().goRight(speed_, p);
 	}
 };
 
