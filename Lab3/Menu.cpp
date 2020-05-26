@@ -4,21 +4,21 @@ MenuElem::MenuElem()
 {
   Position pos;
 	parent_ = NULL;
-	elem_ = "0";
+	title_ = "0";
 	pos_ = pos;
 }
 
-MenuElem::MenuElem( MenuElem* parent, std::string elem, Position pos)
+MenuElem::MenuElem( MenuElem* parent, std::string title, Position pos)
 {
 	parent_ = parent;
-	elem_ = elem;
+	title_ = title;
 	pos_ = pos;
 }
 
 void MenuElem::print()
 {
 	pos_.RasterPos2f();
-	for (auto c : elem_)
+	for (auto c : title_)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, c);
 }
 

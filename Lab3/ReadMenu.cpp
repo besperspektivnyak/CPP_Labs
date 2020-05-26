@@ -21,17 +21,15 @@ std::string ReadMenu(std::string filename)
 	return str;
 }
 
-std::vector<std::string> Parcing(/*Menu menu_,*/ std::string str, double y)
+std::vector<std::string> Parcing(std::string str, double y)
 {
 	MenuElem tmp;
 	double x = 0, deltay = -0.5;
 	y += deltay;
-	Position pos;
-	pos.setX(x);
-	pos.setY(y);
+	Position pos(x, y);
 	std::vector<std::string> s, submenu;
 	Split(str, submenu, ",()");
-	tmp.setElem(submenu.front());
+	tmp.setTitle(submenu.front());
 	tmp.setPos(pos);
 	tmp.setPar(NULL);
 	menu.addElem(tmp);
@@ -44,26 +42,24 @@ std::vector<std::string> Parcing(std::string str, double y, MenuElem* parent)
 	MenuElem tmp;
 	double x = 0, deltay = -0.5;
 	y += deltay;
-	Position pos;
-	pos.setX(x);
-	pos.setY(y);
+	Position pos(x, y);
 	std::vector<std::string> s, submenu;
 	Split(str, submenu, ",()");
-	tmp.setElem(submenu.front());
+	tmp.setTitle(submenu.front());
 	tmp.setPos(pos);
 	tmp.setPar(parent);
 	for (unsigned i = 0; i < menu.getElems().size(); i++)
 	{
-		if (menu.getElems()[i].getElem() == (*parent).getElem())
+		if (menu.getElement(i).getTitle() == (*parent).getTitle())
 		{
-			menu.getElems()[i].addSubMenu(tmp);
+			menu.getElement(i).addSubMenu(tmp);
 			return submenu;
 		}
-		for (unsigned j = 0; j < menu.getElems()[i].getSubMenu().size(); j++)
+		for (unsigned j = 0; j < menu.getElement(i).getSubMenu().size(); j++)
 		{
-			if (menu.getElems()[i].getSubMenu()[i].getElem() == (*parent).getElem())
+			if (menu.getElement(i).getSubMenuElem(j).getTitle() == (*parent).getTitle())
 			{
-				menu.getElems()[i].getSubMenu()[i].addSubMenu(tmp);
+				menu.getElement(i).getSubMenuElem(j).addSubMenu(tmp);
 				return submenu;
 			}
 		}
@@ -77,7 +73,7 @@ MenuElem FindParent(std::string par)
   std::vector<MenuElem> elems = menu.getElems();
 	for (unsigned i = 0; i < elems.size(); i++)
 	{
-		if (elems[i].getElem() == par)
+		if (elems[i].getTitle() == par)
 		{
 			parent = elems[i];
 		  return parent;
@@ -85,12 +81,13 @@ MenuElem FindParent(std::string par)
 		std::vector<MenuElem> sub = elems[i].getSubMenu();
 		for (unsigned j = 0; j < sub.size(); j++)
 		{
-			if (sub[j].getElem() == par)
+			if (sub[j].getTitle() == par)
 			{
 				return sub[j];
 			}
 		}
 	}
+	return parent;
 }
 
 Menu CreateMenu(std::string filename)
@@ -102,7 +99,7 @@ Menu CreateMenu(std::string filename)
 	std::string str = ReadMenu(filename);
 	subMenu = Parcing(str, y);
 	str = subMenu.back();
-	parent = menu.getElems()[0];
+	parent = menu.getElement(0);
 	while (str.size() != 0)
 	{
 		if (subMenu.size() != 0)
@@ -124,7 +121,7 @@ Menu CreateMenu(std::string filename)
 			{
 				str.erase(0, 1);
 				subMenu.back().erase(0, 1);
-				parent.setPar(&(FindParent(parent.getElem())));
+				parent.setPar(&(FindParent(parent.getTitle())));
 			}
 		}
 	}
