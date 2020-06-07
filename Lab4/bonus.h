@@ -1,7 +1,7 @@
 #pragma once
 #include "object.h"
 
-enum BonusType
+enum class BonusType
 {
 	NONE,
 	SPEED_PLUS,
@@ -18,10 +18,13 @@ private:
 	float radius_;
 	BonusType type_;
 public:
-	Bonus(Point center, float speed, float radius, BonusType type) : Object(center, speed) 
-	{ radius_ = radius; type_ = type; }
+  Bonus(): Object() { radius_ = 15; type_ = BonusType::NONE;}
+	Bonus(Point center, BonusType type): Object(center) { radius_ = 15; type_ = type; }
+	Bonus(Point center, float speed, float radius, BonusType type) : Object(center, speed)
+	{
+		radius_ = radius;
+		type_ = type;
+	}
 	virtual void draw() override;
-	virtual void move() override;
-	virtual void collide() override;
-	Bonus operator=(const Bonus& right) { radius_ = right.radius_; type_ = right.type_; }
+	BonusType getType() { return type_; }
 };
