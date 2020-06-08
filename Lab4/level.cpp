@@ -20,10 +20,9 @@ void Level::start()
   drawBorders();
 	drawLives();
 	drawScore();
-  int row = 0;
-	for (row; row < (int)field_.size(); row++)
+	for (int row = 0; row < (int)field_.size(); row++)
 	{
-		for (auto brick : field_[row])
+		for (auto &brick : field_[row])
 		{
 			brick.draw();
 		}
@@ -227,12 +226,10 @@ void Level::collideBonusPaddle()
 		  case BonusType::NONE:
 			  break;
 			case BonusType::SPEED_PLUS:
-			  ball_.setSpeedX(10);
-				ball_.setSpeedY(10);
+			  ball_.collide(10);
 				break;
 			case BonusType::SPEED_MINUS:
-				ball_.setSpeedX(-10);
-				ball_.setSpeedY(-10);
+				ball_.collide(-10);
 				break;
 			case BonusType::PADDLE_PLUS:
 			  paddle_.setWidth(20);
