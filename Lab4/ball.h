@@ -27,6 +27,3 @@ public:
 	void setLives(int live) { lives_ += live; }
 	float getSpeedX() { return speedX_; }
 	float getSpeedY() { return speedY_; }
-	//void setSpeedX(float delta) { speedX_ += delta; }
-	//void setSpeedY(float delta) { speedY_ += delta; }
-};
