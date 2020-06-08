@@ -22,7 +22,7 @@ void Level::start()
 	drawScore();
 	for (int row = 0; row < (int)field_.size(); row++)
 	{
-		for (auto &brick : field_[row])
+		for (auto& brick : field_[row])
 		{
 			brick.draw();
 		}
