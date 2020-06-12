@@ -1,14 +1,12 @@
 #pragma once
+#include "shape.h"
 
-
-class Circle
+class Circle : public Shape
 {
   private:
-    float x_;
-    float y_;
     float radius_;
   public:
-    Circle() {x_ = 0; y_ = 0; radius_ = 0; }
-    Circle(float x, float y, float rad) { x_ = x; y_ = y; radius_ = rad; }
-    void draw();
+    Circle() : Shape() { radius_ = 0; }
+    Circle(float x, float y, float rad, Color color, float size) : Shape(x, y, color, size) {  radius_ = rad; }
+    virtual void draw() override;
 };

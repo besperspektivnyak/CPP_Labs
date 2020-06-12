@@ -25,7 +25,7 @@ private:
 public:
 	MenuElem( MenuElem* parent, std::string elem, Position pos);
 	MenuElem();
-	std::vector<MenuElem> getSubMenu() { return subMenu_; }
+	std::vector<MenuElem>& getSubMenu() { return subMenu_; }
 	MenuElem getSubMenuElem(unsigned index) { return getSubMenu()[index]; }
 	MenuElem* getParent() { return parent_; }
 	std::string getTitle() { return title_; }

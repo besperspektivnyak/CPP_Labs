@@ -4,7 +4,6 @@
 #include <sstream>
 #include <math.h>
 #include "paint.h"
-#include "brush.h"
 #include "pen.h"
 #include "eraser.h"
 #include "line.h"
@@ -14,7 +13,7 @@
 #include <GL\GLU.h>
 
 
-extern Color white/*(1.0f, 1.0f, 1.0f)*/;
+extern Color white;
 Color black(0.0f, 0.0f, 0.0f);
 Color red(1.0f, 0.0f, 0.0f);
 Color green(0.0f, 1.0f, 0.0f);
@@ -25,7 +24,7 @@ Color lightBlue(0.0f, 1.0f, 1.0f);
 
 bool mouseClicked = 0;
 bool statement = false;
-Color actualColor(0, 0, 0);
+Color actualColor = black;
 float actualSize = 10;
 
 Mode mode;
@@ -93,73 +92,57 @@ void Paint(int button, int state, int x, int y)
 			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 			  Save();
 			break;
-		case Mode::LINE:
-		  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	    {
-		    mouseClicked = true;
-		    X1 = x;
-		    Y1 = y;
-	    }
-	    else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
-	    {
-				Line line(X1, windh - Y1, X2, windh - Y2, actualSize, actualColor);
-				line.draw();
-		    X2 = X1;
-		    Y2 = Y1;
-	    }
+		case Mode::SIZE:
+			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+				ChooseSize(y);
 			break;
-		case Mode::CIRCLE:
-			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && statement == false)
-	    {
-		     mouseClicked = true;
-		     statement = true;
-		     X1 = x;
-		     Y1 = (float)y;
-	    }
-      else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && statement == true)
-	    {
-		     mouseClicked = true;
-		     statement = false;
-		     X2 = x;
-		     Y2 = y;
-	    }  
+		case Mode::COLOR:
+			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+				ChooseColor(y, x);
+			break;
+	}
+	  if (mode == Mode::LINE || mode == Mode::CIRCLE || mode == Mode::RECTANGLE)
+		{
 
-	    else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
-	    { 
-	       Circle circle(X1, windh - Y1, fabs(X1 - X2));
-	       circle.draw();
-	    }
-			break;
-		case Mode::RECTANGLE:
 			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && statement == false)
 			{
-				mouseClicked = 1;
+				mouseClicked = true;
 				statement = true;
 				X1 = x;
-				Y1 = y;
+				Y1 = (float)y;
 			}
 			else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && statement == true)
 			{
-				mouseClicked = 1;
+				mouseClicked = true;
 				statement = false;
 				X2 = x;
 				Y2 = y;
 			}
-			else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
+		  if (mode == Mode::LINE)
 			{
-				Rectangle rectangle(X1, windh - Y1, X2, windh - Y2, 10, actualColor);
-				rectangle.draw();
+				Line line(X1, windh - Y1, X2, windh - Y2, actualSize, actualColor);
+				if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
+				{
+					line.draw();
+				}
 			}
-			break;
-		case Mode::SIZE:
-		  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-		    ChooseSize(y);
-			break;
-		case Mode::COLOR:
-			if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-			  ChooseColor(y, x);
-		  break;
-	}
+			else if (mode == Mode::RECTANGLE)
+			{
+				Circle circle(X1, windh - Y1, fabs(X1 - X2), actualColor, actualSize);
+				if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
+				{ 
+					circle.draw();
+				}
+			}
+			else if (mode == Mode::RECTANGLE)
+			{
+			  Rectangle rect(X1, windh - Y1, X2, windh - Y2, actualSize, actualColor);
+				if (button == GLUT_LEFT_BUTTON && state == GLUT_UP && mouseClicked == true)
+				{
+					rect.draw();
+				}
+		  }
+		}
 }
 
 void mouseMove(int x, int y)

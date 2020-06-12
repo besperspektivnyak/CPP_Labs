@@ -48,18 +48,18 @@ std::vector<std::string> Parcing(std::string str, double x, MenuElem* parent)
 	tmp.setTitle(submenu.front());
 	tmp.setPos(pos);
 	tmp.setPar(parent);
-	for (unsigned i = 0; i < menu.getElems().size(); i++)
+	for (auto elem : menu.getElems())
 	{
-		if (menu.getElement(i).getTitle() == (*parent).getTitle())
+		if (elem.getTitle() == (*parent).getTitle())
 		{
-			menu.getElement(i).addSubMenu(tmp);
+			elem.addSubMenu(tmp);
 			return submenu;
 		}
-		for (unsigned j = 0; j < menu.getElement(i).getSubMenu().size(); j++)
+		for (auto sub : elem.getSubMenu())
 		{
-			if (menu.getElement(i).getSubMenuElem(j).getTitle() == (*parent).getTitle())
+			if (sub.getTitle() == (*parent).getTitle())
 			{
-				menu.getElement(i).getSubMenuElem(j).addSubMenu(tmp);
+				sub.addSubMenu(tmp);
 				return submenu;
 			}
 		}
